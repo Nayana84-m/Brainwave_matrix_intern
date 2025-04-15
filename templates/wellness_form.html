@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Mental Wellness Tracker</title>
+</head>
+<body>
+    <h2>Submit Your Wellness Info</h2>
+    <form method="post">
+        Name: <input type="text" name="name" required><br><br>
+        Sleep Hours: <input type="number" step="0.1" name="sleep_hours" required><br><br>
+        Stress Level (1-10): <input type="number" name="stress_level" min="1" max="10" required><br><br>
+        Activity Done Today: <input type="text" name="activity" required><br><br>
+        Day of the Week:
+        <select name="day">
+            <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+            <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+        </select><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <p>{{ message }}</p>
+    <br>
+    <a href="/summary">View Weekly Summary</a>
+</body>
+</html>
