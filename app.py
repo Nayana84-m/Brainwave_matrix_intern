@@ -27,18 +27,21 @@ def index():
 
 @app.route('/summary')
 def summary():
+    if not os.path.exists(CSV_FILE) or os.path.getsize(CSV_FILE) == 0:
+        return "No data available yet. Please submit the form first."
+
     df = pd.read_csv(CSV_FILE)
-    if df.empty:
-        return "No data available yet."
+    if "day" not in df.columns or "stress_level" not in df.columns:
+        return "Required data columns not found."
 
+    plt.figure(figsize=(8, 4))
     df.groupby("day")["stress_level"].mean().plot(kind='bar', color='skyblue')
-    plt.ylabel("Avg Stress Level")
-    plt.title("Average Stress Level per Day")
+    plt.title("Average Stress Level by Day")
+    plt.ylabel("Stress Level")
+    plt.xlabel("Day")
     plt.tight_layout()
-    plt.savefig("static/summary.png")
-    plt.clf()
-
-    return '<h3>Average Stress Level per Day</h3><img src="/static/summary.png"/>'
+    plt.savefig(STATIC_IMAGE)
+    return render_template("summary.html", image_file=STATIC_IMAGE)
 
 if __name__ == '__main__':
     app.run(debug=True)
