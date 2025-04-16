@@ -25,23 +25,32 @@ def index():
         return render_template('wellness_form.html', message="Thank you for submitting!")
     return render_template('wellness_form.html', message='')
 
-@app.route('/summary')
+@app.route("/summary")
 def summary():
-    if not os.path.exists(CSV_FILE) or os.path.getsize(CSV_FILE) == 0:
-        return "No data available yet. Please submit the form first."
+    try:
+        df = pd.read_csv(CSV_FILE)
+        print("CSV content:\n", df.head())  # Add this line
 
-    df = pd.read_csv(CSV_FILE)
-    if "day" not in df.columns or "stress_level" not in df.columns:
-        return "Required data columns not found."
+        if df.empty:
+            return "CSV file is empty"
 
-    plt.figure(figsize=(8, 4))
-    df.groupby("day")["stress_level"].mean().plot(kind='bar', color='skyblue')
-    plt.title("Average Stress Level by Day")
-    plt.ylabel("Stress Level")
-    plt.xlabel("Day")
-    plt.tight_layout()
-    plt.savefig(STATIC_IMAGE)
-    return render_template("summary.html", image_file=STATIC_IMAGE)
+        required_columns = {"day", "stress_level"}
+        if not required_columns.issubset(df.columns):
+            return "Required data columns not found"
+
+        img = io.BytesIO()
+        df.groupby("day")["stress_level"].mean().plot(kind='bar', color='skyblue')
+        plt.title("Average Stress Level per Day")
+        plt.ylabel("Stress Level")
+        plt.tight_layout()
+        plt.savefig(img, format='png')
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode()
+        return render_template("summary.html", plot_url=plot_url)
+
+    except Exception as e:
+        print("Error:", e)
+        return "Internal server error"
 
 if __name__ == '__main__':
     app.run(debug=True)
