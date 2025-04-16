@@ -23,8 +23,6 @@ def index():
         new_entry.to_csv(CSV_FILE, mode='a', header=False, index=False)
 
         return render_template('wellness_form.html', message="Thank you for submitting!")
-        if __name__ == "__main__":
-            app.run(debug=True)
     return render_template('wellness_form.html', message='')
 
 @app.route('/summary')
@@ -42,5 +40,5 @@ def summary():
 
     return '<h3>Average Stress Level per Day</h3><img src="/static/summary.png"/>'
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
