@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-app = Flask(_name_)
+app = Flask(__name__)
 CSV_FILE = 'wellness_data.csv'
 
 if not os.path.exists(CSV_FILE):
@@ -23,7 +23,8 @@ def index():
         new_entry.to_csv(CSV_FILE, mode='a', header=False, index=False)
 
         return render_template('wellness_form.html', message="Thank you for submitting!")
-
+        if __name__ == "__main__":
+            app.run(debug=True)
     return render_template('wellness_form.html', message='')
 
 @app.route('/summary')
