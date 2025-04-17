@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import io
+import base64
 
 app = Flask(__name__)
 CSV_FILE = 'wellness_data.csv'
@@ -45,7 +47,7 @@ def summary():
         plt.tight_layout()
         plt.savefig(img, format='png')
         img.seek(0)
-        plot_url = base64.b64encode(img.getvalue()).decode()
+        plot_url = base64.b64encode(img.getvalue()).decode('utf-8')
         return render_template("summary.html", plot_url=plot_url)
 
     except Exception as e:

@@ -1,6 +1,11 @@
-name,age,stress_level,day
-Alice,21,3,Monday
-Bob,22,5,Tuesday
-Charlie,20,2,Wednesday
-Daisy,23,4,Thursday
-Ethan,19,1,Friday
+name,sleep_hours,stress_level,activity,day
+Alice,7,3,walking,Monday
+Bob,6,5,study,Tuesday
+Charlie,8,2,yoga,Wednesday
+Daisy,6,4,meditation,Thursday
+Ethan,7,1,study,Friday
+megha,8.0,7,Leisure,Thursday
+nayana,58.0,8,Meditation,Thursday
+naya,4.9,10,Exercise,Monday
+sne,5.6,10,Leisure,Friday
+nayna,5.0,5,Exercise,Friday
