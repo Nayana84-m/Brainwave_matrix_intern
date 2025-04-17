@@ -11,12 +11,12 @@ Gunicorn (WSGI Server for Production)
 
 Setup
 1. Clone the Repo:
-git clone https://github.com/yourusername/Brainwave_Matrix_Intern.git
+git clone https://github.com/Nayana84-m/Brainwave_Matrix_Intern.git
 cd Brainwave_Matrix_Intern
 
 2. Create a Virtual Environment:
 python -m venv venv
-source venv/bin/activate  # On Windows use venv\Scripts\activate
+source venv/bin/activate  
 
 3. Install Dependencies:
 pip install -r requirements.txt
