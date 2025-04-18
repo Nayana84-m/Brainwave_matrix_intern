@@ -5,9 +5,10 @@ import os
 import io
 import base64
 
-app = Flask(__name__)
+app = Flask(_name_)
 CSV_FILE = 'wellness_data.csv'
 
+# Create CSV file if it doesn't exist
 if not os.path.exists(CSV_FILE):
     pd.DataFrame(columns=["name", "sleep_hours", "stress_level", "activity", "day"]).to_csv(CSV_FILE, index=False)
 
@@ -20,18 +21,19 @@ def index():
         activity = request.form['activity']
         day = request.form['day']
 
-        new_entry = pd.DataFrame([[name, sleep, stress, activity, day]], 
+        new_entry = pd.DataFrame([[name, sleep, stress, activity, day]],
                                  columns=["name", "sleep_hours", "stress_level", "activity", "day"])
         new_entry.to_csv(CSV_FILE, mode='a', header=False, index=False)
 
         return render_template('wellness_form.html', message="Thank you for submitting!")
+
     return render_template('wellness_form.html', message='')
 
 @app.route("/summary")
 def summary():
     try:
         df = pd.read_csv(CSV_FILE)
-        print("CSV content:\n", df.head())  # Add this line
+        print("CSV content:\n", df.head())
 
         if df.empty:
             return "CSV file is empty"
@@ -40,6 +42,7 @@ def summary():
         if not required_columns.issubset(df.columns):
             return "Required data columns not found"
 
+        # Generate bar chart
         img = io.BytesIO()
         df.groupby("day")["stress_level"].mean().plot(kind='bar', color='skyblue')
         plt.title("Average Stress Level per Day")
@@ -47,6 +50,8 @@ def summary():
         plt.tight_layout()
         plt.savefig(img, format='png')
         img.seek(0)
+
+        # Convert plot to base64 for rendering
         plot_url = base64.b64encode(img.getvalue()).decode('utf-8')
         return render_template("summary.html", plot_url=plot_url)
 
@@ -54,5 +59,5 @@ def summary():
         print("Error:", e)
         return "Internal server error"
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
