@@ -89,12 +89,15 @@
                 <option>Saturday</option>
                 <option>Sunday</option>
             </select>
+            <button type="submit">Submit</button><form method="POST">
             <button type="submit">Submit</button>
-            <form action="/summary" method="GET">
-            <button type="submit" style="background: #1976d2; margin-top: 10px;">
-                View Weekly Summary
-            </button>
         </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/summary" style="text-decoration: none;">
+            <button type="button">View Weekly Summary</button>
+            </a>
+        </div>
             {% if message %}
          <div class="message">{{ message }}</div>
         {% endif %}
