@@ -5,7 +5,7 @@ import os
 import io
 import base64
 
-app = Flask(_name_)
+app = Flask(__name__)
 CSV_FILE = 'wellness_data.csv'
 
 # Create CSV file if it doesn't exist
@@ -59,5 +59,5 @@ def summary():
         print("Error:", e)
         return "Internal server error"
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
