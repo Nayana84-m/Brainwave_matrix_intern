@@ -1,121 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MindEase - Student Wellness Tracker</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #c9d6ff, #e2e2e2);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-
-    input, select {
-      padding: 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-top: 0.3rem;
-    }
-
-    button {
-      margin-top: 1.5rem;
-      padding: 0.8rem;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .message {
-      text-align: center;
-      margin-top: 1rem;
-      color: #008000;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Daily Wellness Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #e3f2fd;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 450px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #1976d2;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #90caf9;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1565c0;
+        }
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            color: green;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>MindEase - Daily Wellness Form</h2>
-    <form method="POST">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required />
+    <div class="container">
+        <h1>How Are You Today?</h1>
+        <form method="POST">
+            <label for="name">Name:</label>
+            <input type="text" name="name" required>
 
-      <label for="sleep_hours">Sleep Hours:</label>
-      <input type="number" step="0.1" id="sleep_hours" name="sleep_hours" required />
+            <label for="sleep_hours">Hours of Sleep:</label>
+            <input type="number" step="0.1" name="sleep_hours" required>
 
-      <label for="stress_level">Stress Level (1-10):</label>
-      <input type="number" id="stress_level" name="stress_level" min="1" max="10" required />
+            <label for="feeling">How are you feeling today?</label>
+            <select name="feeling" required>
+                <option value="">--Select--</option>
+                <option value="Very Relaxed">Very Relaxed</option>
+                <option value="Relaxed">Relaxed</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Tired">Tired</option>
+                <option value="Stressed">Stressed</option>
+                <option value="Very Stressed">Very Stressed</option>
+            </select>
 
-      <label for="activity">Activity Done:</label>
-      <select id="activity" name="activity" required>
-        <option value="" disabled selected>Select activity</option>
-        <option value="Exercise">Exercise</option>
-        <option value="Meditation">Meditation</option>
-        <option value="Study">Study</option>
-        <option value="Leisure">Leisure</option>
-        <option value="Socializing">Socializing</option>
-      </select>
+            <label for="activity">Activity You Did Today:</label>
+            <input type="text" name="activity" required>
 
-      <label for="day">Day:</label>
-      <select id="day" name="day" required>
-        <option value="" disabled selected>Select day</option>
-        <option>Monday</option>
-        <option>Tuesday</option>
-        <option>Wednesday</option>
-        <option>Thursday</option>
-        <option>Friday</option>
-        <option>Saturday</option>
-        <option>Sunday</option>
-      </select>
+            <label for="day">Day of the Week:</label>
+            <select name="day" required>
+                <option value="">--Select--</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+            </select>
 
-      <button type="submit">Submit</button>
-    </form>
-
-    <form method="GET" action="/summary">
-    <button type="submit" style="margin-top: 10px; background-color: #00695c;">View Stress Summary</button>
-    </form>
-
-     {% if message %}
-      <div class="message">{{ message }}</div>
-    {% endif %}
-  </div>
+            <button type="submit">Submit</button>
+        </form>
+        {% if message %}
+        <div class="message">{{ message }}</div>
+        {% endif %}
+    </div>
 </body>
 </html>

@@ -1,32 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Stress Summary</title>
     <style>
         body {
-            background-color: #f0f8ff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: #fce4ec;
+            margin: 0;
+            padding: 0;
         }
-        .chart-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 30px;
         }
         h1 {
-            color: #333;
+            text-align: center;
+            color: #d81b60;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #7b1fa2;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
         }
     </style>
 </head>
 <body>
-    <div class="chart-container">
-        <h1>Average Stress Level per Day</h1>
-        <img src="data:image/png;base64,{{ plot_url }}">
+    <div class="container">
+        <h1>Weekly Stress Overview</h1>
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Stress Level Chart">
+        
+        <h2>Suggested Activities for You</h2>
+        <ul>
+            {% for suggestion in suggestions %}
+                <li>{{ suggestion }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="footer">
+            Stay kind to yourself. You've got this!
+        </div>
     </div>
 </body>
 </html>

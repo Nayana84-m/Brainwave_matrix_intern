@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask,
+render_template, request
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -8,7 +9,17 @@ import base64
 app = Flask(__name__)
 CSV_FILE = 'wellness_data.csv'
 
-# Create CSV file if it doesn't exist
+# Map feelings to stress level
+feeling_to_stress = {
+    "Very Relaxed": 1,
+    "Relaxed": 3,
+    "Neutral": 5,
+    "Tired": 6,
+    "Stressed": 8,
+    "Very Stressed": 10
+}
+
+# Create CSV file with required columns if it doesn't exist
 if not os.path.exists(CSV_FILE):
     pd.DataFrame(columns=["name", "sleep_hours", "stress_level", "activity", "day"]).to_csv(CSV_FILE, index=False)
 
@@ -17,47 +28,48 @@ def index():
     if request.method == 'POST':
         name = request.form['name']
         sleep = float(request.form['sleep_hours'])
-        stress = int(request.form['stress_level'])
+        feeling = request.form['feeling']
+        stress = feeling_to_stress.get(feeling, 5)  # Default to 5 if unknown
         activity = request.form['activity']
         day = request.form['day']
 
+        # Save to CSV
         new_entry = pd.DataFrame([[name, sleep, stress, activity, day]],
                                  columns=["name", "sleep_hours", "stress_level", "activity", "day"])
         new_entry.to_csv(CSV_FILE, mode='a', header=False, index=False)
-
         return render_template('wellness_form.html', message="Thank you for submitting!")
-
     return render_template('wellness_form.html', message='')
 
-@app.route("/summary")
+@app.route('/summary')
 def summary():
     try:
         df = pd.read_csv(CSV_FILE)
-        print("CSV content:\n", df.head())
-
         if df.empty:
-            return "CSV file is empty"
+            return "CSV file is empty."
 
-        required_columns = {"day", "stress_level"}
-        if not required_columns.issubset(df.columns):
-            return "Required data columns not found"
-
-        # Generate bar chart
+        # Graph for average stress level per day
         img = io.BytesIO()
-        df.groupby("day")["stress_level"].mean().plot(kind='bar', color='skyblue')
+        df.groupby("day")["stress_level"].mean().reindex(
+            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        ).plot(kind='bar', color='#64b5f6')
         plt.title("Average Stress Level per Day")
-        plt.ylabel("Stress Level")
+        plt.ylabel("Stress Level (0-10)")
+        plt.ylim(0, 10)
         plt.tight_layout()
         plt.savefig(img, format='png')
         img.seek(0)
-
-        # Convert plot to base64 for rendering
         plot_url = base64.b64encode(img.getvalue()).decode('utf-8')
-        return render_template("summary.html", plot_url=plot_url)
+
+        # Suggest activities for high stress levels
+        avg_stress = df["stress_level"].mean()
+        if avg_stress >= 8:
+            suggestions = ["Meditation", "Go for a walk", "Listen to music", "Talk to a friend"]
+        elif avg_stress >= 5:
+            suggestions = ["Light exercise", "Journaling", "Take deep breaths", "Watch a favorite movie"]
+        else:
+            suggestions = ["Keep up the good work!", "Maintain balance", "Enjoy relaxing activities"]
+
+        return render_template("summary.html", plot_url=plot_url, suggestions=suggestions)
 
     except Exception as e:
-        print("Error:", e)
-        return "Internal server error"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        return f"Error generating summary: {e}"
