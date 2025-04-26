@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 import os
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ def save_reflection(gratitude, message, wish):
         file.write(f"Gratitude for Today: {gratitude}\n")
         file.write(f"One positive affirmation: {message}\n")
         file.write(f"A Wish I'm sending to Universe: {wish}\n")
-        file.write("-" * 40 + "\n")
+        file.write("\n")
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -24,6 +24,7 @@ def home():
             return render_template("index.html", error="Please fill the fields.")
 
     return render_template("index.html")
+
 
 @app.route('/garden')
 def garden():
@@ -49,6 +50,7 @@ def garden():
                             "wish": wish
                         }
                         reflections.append(reflection)
+                        print (reflections)
 
     reflections.reverse()
 
