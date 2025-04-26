@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LushMind 🌸</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>LushMind 🌸</h1>
+        <h2>Your Safe Space for Gratitude, Dreams & Kindness</h2>
+
+        <form action="/" method="POST">
+            <label for="gratitude">🌿 Today, I'm grateful for:</label><br>
+            <textarea name="gratitude" id="gratitude" required></textarea><br><br>
+
+            <label for="message">💌 A Message to Future Me:</label><br>
+            <textarea name="message" id="message" required></textarea><br><br>
+
+            <label for="kind_work">🌼 One Kindness I Will Do Today:</label><br>
+            <textarea name="kind_work" id="kind_work" required></textarea><br><br>
+
+            <button type="submit">Save My Reflection ✨</button>
+        </form>
+
+        {% if success %}
+            <p class="success">Reflection saved successfully! 🌟</p>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+	<p>Want to see your reflections? <a href="/garden">Visit Your Garden 🌸</a></p>
+    </div>
+</body>
+</html>
+

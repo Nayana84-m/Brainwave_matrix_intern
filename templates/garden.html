@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden of Gratitude 🌸</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Garden of Gratitude 🌸</h1>
+        <h2>Here are all your beautiful reflections:</h2>
+
+        {% if reflections %}
+            <ul>
+                {% for reflection in reflections %}
+                    <li>
+                        <p><strong>Gratitude for Today:</strong> {{ reflection.gratitude }}</p>
+                        <p><strong>Message to Future You:</strong> {{ reflection.message }}</p>
+                        <p><strong>Kind Work Done Today:</strong> {{ reflection.kind_work }}</p>
+                        <hr>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No reflections yet! Start reflecting and they will appear here. 🌟</p>
+        {% endif %}
+
+        <a href="/">Go back to the Reflection Page</a>
+    </div>
+</body>
+</html>
+
