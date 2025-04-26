@@ -3,11 +3,11 @@ import os
 
 app = Flask(__name__)
 
-def save_reflection(gratitude, message, kind_work):
+def save_reflection(gratitude, message, wish):
     with open("reflections.txt", "a") as file:
         file.write(f"Gratitude for Today: {gratitude}\n")
-        file.write(f"Message for Future You: {message}\n")
-        file.write(f"Kind Work You Did: {kind_work}\n")
+        file.write(f"One positive affirmation: {message}\n")
+        file.write(f"A Wish I'm sending to Universe: {wish}\n")
         file.write("-" * 40 + "\n")
 
 @app.route("/", methods=["GET", "POST"])
@@ -15,13 +15,13 @@ def home():
     if request.method == "POST":
         gratitude = request.form.get("gratitude")
         message = request.form.get("message")
-        kind_work = request.form.get("kind_work")
+        wish = request.form.get("wish")
 
-        if gratitude and message and kind_work:
-            save_reflection(gratitude, message, kind_work)  # Save or process the reflection data
+        if gratitude and message and wish:
+            save_reflection(gratitude, message, wish)
             return render_template("index.html", success=True)
         else:
-            return render_template("index.html", error="Please fill in all fields!")
+            return render_template("index.html", error="Please fill the fields.")
 
     return render_template("index.html")
 
@@ -36,17 +36,17 @@ def garden():
             for i in range(0, len(reflections_data), 4):
                 if i + 2 < len(reflections_data):
                     if "Gratitude for Today:" in reflections_data[i] and \
-                       "Message for Future You:" in reflections_data[i+1] and \
-                       "Kind Work You Did:" in reflections_data[i+2]:
+                       "One positive affirmation:" in reflections_data[i+1] and \
+                       "A Wish I'm sending to Universe:" in reflections_data[i+2]:
 
                         gratitude = reflections_data[i].strip().split(": ", 1)[1]
                         message = reflections_data[i+1].strip().split(": ", 1)[1]
-                        kind_work = reflections_data[i+2].strip().split(": ", 1)[1]
+                        wish = reflections_data[i+2].strip().split(": ", 1)[1]
 
                         reflection = {
                             "gratitude": gratitude,
                             "message": message,
-                            "kind_work": kind_work
+                            "wish": wish
                         }
                         reflections.append(reflection)
 

@@ -15,9 +15,9 @@
             <ul>
                 {% for reflection in reflections %}
                     <li>
-                        <p><strong>Gratitude for Today:</strong> {{ reflection.gratitude }}</p>
-                        <p><strong>Message to Future You:</strong> {{ reflection.message }}</p>
-                        <p><strong>Kind Work Done Today:</strong> {{ reflection.kind_work }}</p>
+                        <p><strong>'Gratitude' for Today:</strong> {{ reflection.gratitude }}</p>
+                        <p><strong>One 'Positive' Affirmation:</strong> {{ reflection.message }}</p>
+                        <p><strong>One 'Wish' to the Universe:</strong> {{ reflection.wish }}</p>
                         <hr>
                     </li>
                 {% endfor %}
@@ -25,9 +25,13 @@
         {% else %}
             <p>No reflections yet! Start reflecting and they will appear here. 🌟</p>
         {% endif %}
-
+    
         <a href="/">Go back to the Reflection Page</a>
     </div>
+   
+    <footer class="footer">
+        <p>&copy; 2025 LushMinds. All rights reserved. 🌸 | Made with love & gratitude✨</p>
+    </footer>
 </body>
 </html>
 

@@ -3,23 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LushMind 🌸</title>
+    <title>LushMinds 🌸</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="floating-flowers">
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    </div>
+
     <div class="container">
-        <h1>LushMind 🌸</h1>
-        <h2>Your Safe Space for Gratitude, Dreams & Kindness</h2>
+        <h1>LushMinds 🌸</h1>
+        <h2>Share Your Gratitude, Inspire Hearts Anonymously!🌻</h2>
 
         <form action="/" method="POST">
-            <label for="gratitude">🌿 Today, I'm grateful for:</label><br>
+            <label for="gratitude">🌿 Today, I'm 'Grateful' For:</label><br>
             <textarea name="gratitude" id="gratitude" required></textarea><br><br>
 
-            <label for="message">💌 A Message to Future Me:</label><br>
+            <label for="message">💌 One 'Positive' Affirmation:</label><br>
             <textarea name="message" id="message" required></textarea><br><br>
 
-            <label for="kind_work">🌼 One Kindness I Will Do Today:</label><br>
-            <textarea name="kind_work" id="kind_work" required></textarea><br><br>
+            <label for="wish">🌼 One 'Wish' I'm sending into the Universe:</label><br>
+            <textarea name="wish" id="wish" required></textarea><br><br>
 
             <button type="submit">Save My Reflection ✨</button>
         </form>
@@ -32,8 +40,12 @@
             <p class="error">{{ error }}</p>
         {% endif %}
 
-	<p>Want to see your reflections? <a href="/garden">Visit Your Garden 🌸</a></p>
+	<p>Feel the Gentle Magic of Gratitude - <a href="/garden">Visit Garden!🌸</a></p>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 LushMinds. All rights reserved. 🌸 | Made with love & gratitude✨</p>
+    </footer>
 </body>
 </html>
 

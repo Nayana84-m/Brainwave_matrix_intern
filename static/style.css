@@ -1,10 +1,14 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 20px;
+    background: linear-gradient(135deg, #ffe0f0, #e0f7ff, #e8e0ff);
+    background-size: 400% 400%;
+    animation: gradientFlow 15s ease infinite;
+    font-family: 'Poppins', sans-serif;
 }
-
+@keyframes gradientFlow {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
 .container {
     max-width: 800px;
     margin: auto;
@@ -69,4 +73,76 @@ p a {
 
 p a:hover {
     color: #6a1b9a;
+}
+.footer {
+    margin-top: 50px;
+    padding: 15px;
+    background-color: #fceff9;
+    text-align: center;
+    font-size: 14px;
+    color: #6a4c93;
+    font-family: 'Poppins', sans-serif;
+    border-top: 1px solid #e0c9e8;
+
+    /* Animation */
+    opacity: 0;
+    animation: fadeInFooter 2s forwards;
+}
+
+/* Animation Keyframes */
+@keyframes fadeInFooter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer p {
+    margin: 0;
+}
+.floating-flowers {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: -1; /* stay behind everything */
+}
+
+.floating-flowers span {
+    position: absolute;
+    bottom: -50px;
+    width: 30px;
+    height: 30px;
+    animation: floatUp 15s linear infinite;
+    opacity: 0.5;
+    font-size: 24px;
+    color: #f7c5e0;
+}
+
+/* Randomize starting position */
+.floating-flowers span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-flowers span:nth-child(2) { left: 30%; animation-delay: 5s; }
+.floating-flowers span:nth-child(3) { left: 50%; animation-delay: 2s; }
+.floating-flowers span:nth-child(4) { left: 70%; animation-delay: 7s; }
+.floating-flowers span:nth-child(5) { left: 90%; animation-delay: 3s; }
+
+/* Animation keyframes */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
 }
