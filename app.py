@@ -1,14 +1,16 @@
 from flask import Flask, render_template, request, redirect
 import os
+import sqlite3
 
 app = Flask(__name__)
 
 def save_reflection(gratitude, message, wish):
-    with open("reflections.txt", "a") as file:
-        file.write(f"Gratitude for Today: {gratitude}\n")
-        file.write(f"One positive affirmation: {message}\n")
-        file.write(f"A Wish I'm sending to Universe: {wish}\n")
-        file.write("\n")
+    conn = sqlite3.connect('reflections.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO reflections (gratitude, message, wish) VALUES (?, ?, ?)',
+              (gratitude, message, wish))
+    conn.commit()
+    conn.close()
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -25,35 +27,13 @@ def home():
 
     return render_template("index.html")
 
-
 @app.route('/garden')
 def garden():
-    reflections = []
-
-    if os.path.exists('reflections.txt'):
-        with open('reflections.txt', 'r') as file:
-            reflections_data = file.readlines()
-
-            for i in range(0, len(reflections_data), 4):
-                if i + 2 < len(reflections_data):
-                    if "Gratitude for Today:" in reflections_data[i] and \
-                       "One positive affirmation:" in reflections_data[i+1] and \
-                       "A Wish I'm sending to Universe:" in reflections_data[i+2]:
-
-                        gratitude = reflections_data[i].strip().split(": ", 1)[1]
-                        message = reflections_data[i+1].strip().split(": ", 1)[1]
-                        wish = reflections_data[i+2].strip().split(": ", 1)[1]
-
-                        reflection = {
-                            "gratitude": gratitude,
-                            "message": message,
-                            "wish": wish
-                        }
-                        reflections.append(reflection)
-                        print (reflections)
-
-    reflections.reverse()
-
+    conn = sqlite3.connect('reflections.db')
+    c = conn.cursor()
+    c.execute('SELECT gratitude, message, wish FROM reflections')
+    reflections = c.fetchall()
+    conn.close()
     return render_template('garden.html', reflections=reflections)
 
 if __name__ == "__main__":

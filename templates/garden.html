@@ -17,15 +17,15 @@
 
     <div class="container">
         <h1>LushMinds 🌸</h1>
-        <h2>Here are all your beautiful reflections:</h2>
+        <h2>Whispers of Gratitude and Wishes 💫:</h2>
 
         {% if reflections %}
             <ul>
-                {% for reflection in reflections %}
+                {% for gratitude, message, wish in reflections %}
                     <li>
-                        <p><strong>'Gratitude' for Today:</strong> {{ reflection.gratitude }}</p>
-                        <p><strong>One 'Positive' Affirmation:</strong> {{ reflection.message }}</p>
-                        <p><strong>One 'Wish' to the Universe:</strong> {{ reflection.wish }}</p>
+                        <p><strong>'Gratitude' for Today:</strong> {{ gratitude }}</p>
+                        <p><strong>One 'Positive' Affirmation:</strong> {{ message }}</p>
+                        <p><strong>One 'Wish' to the Universe:</strong> {{ wish }}</p>
                         <hr>
                     </li>
                 {% endfor %}
@@ -33,10 +33,10 @@
         {% else %}
             <p>No reflections yet! Start reflecting and they will appear here. 🌟</p>
         {% endif %}
-    
+
         <a href="/">Go back to the Reflection Page</a>
     </div>
-   
+
     <footer class="footer">
         <p>&copy; 2025 LushMinds. All rights reserved. 🌸 | Made with love & gratitude✨</p>
     </footer>
