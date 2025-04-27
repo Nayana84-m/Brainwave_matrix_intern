@@ -33,6 +33,7 @@ def garden():
     c = conn.cursor()
     c.execute('SELECT gratitude, message, wish FROM reflections ORDER BY id DESC')
     reflections = c.fetchall()
+    print(f"Reflections fetched: {reflections}")
     conn.close()
     return render_template('garden.html', reflections=reflections)
 
